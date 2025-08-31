@@ -80,7 +80,12 @@ function displayWeatherData(data, city) {
     }
     
     // console.log("CIVIL Light API Data:", data); 
-
+    let forecastHTML = `
+        <div class="weather-header">
+            <h2>Forecast for ${city.city} City</h2>
+        </div>
+        <div class="weather-cards">
+    `;
 
     
     data.dataseries.forEach(stamp => {
@@ -89,24 +94,64 @@ function displayWeatherData(data, city) {
         const weatherDesc = stamp.weather;
         const dateStr = String(stamp.date);
 
-        const formattedDate = getFormattedDate(dateStr);        
+        const formattedDate = getFormattedDate(dateStr);  
+        
+        
+        forecastHTML += `
+            <div class="weather-card">
+                <div class="date">${formattedDate}</div>
+                <div class="weather-icon">
+                    <img src="${getWeatherImage(weatherDesc)}" alt="${weatherDesc}">
+                </div>
+                <div class="temps">
+                    <span class="max-temp">${maxTemp}°</span>
+                    <span class="min-temp">${minTemp}°</span>
+                </div>
+            </div>
+        `;
     });
 
+    forecastHTML += '</div>';
+    result.innerHTML = forecastHTML;
+}
     
 
-    function getFormattedDate(dateStr){
-        const year = parseInt(dateStr.substring(0,4));
-        const month = parseInt(dateStr.substring(4,6))-1;
-        const day = parseInt(dateStr.substring(6,8));
-       
-        const date = new Date(year,month,day);
+function getFormattedDate(dateStr){
+    const year = parseInt(dateStr.substring(0,4));
+    const month = parseInt(dateStr.substring(4,6))-1;
+    const day = parseInt(dateStr.substring(6,8));
+    
+    const date = new Date(year,month,day);
 
-        const formattedDate = date.toLocaleDateString('en-US', {
-            day: 'numeric',
-            month: 'long',
-            year: 'numeric'
-        });
-        return formattedDate;
-    }
+    const formattedDate = date.toLocaleDateString('en-US', {
+        day: 'numeric',
+        month: 'long',
+        year: 'numeric'
+    });
+    return formattedDate;
+}
 
+
+
+function getWeatherImage(weatherDesc) {
+    const weatherImageMap = {
+        'clear': '../images/clear.png',
+        'cloudy': '../images/cloudy.png',
+        'fog': '../images/fog.png',
+        'humid': '../images/humid.png',
+        'ishower': '../images/ishower.png',
+        'lightrain': '../images/lightrain.png',
+        'lightsnow': '../images/lightsnow.png',
+        'mcloudy': '../images/mcloudy.png',
+        'oshower': '../images/oshower.png',
+        'pcloudy': '../images/pcloudy.png',
+        'rain': '../images/rain.png',
+        'rainsnow': '../images/rainsnow.png',
+        'snow': '../images/snow.png',
+        'tsrain': '../images/tsrain.png',
+        'tstorm': '../images/tstorm.png',
+        'windy': '../images/windy.png',
+    };
+
+    return weatherImageMap[weatherDesc] || '../images/clear.png';
 }
