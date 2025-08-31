@@ -29,7 +29,7 @@ window.onload = function(){
 
 function populateCityList(){
     const dataList = document.getElementById('cityList');
-    dataList.innerHTML = ''; // Clear previous options
+    dataList.innerHTML = ''; 
 
     cities.forEach(city=>{
         const option = document.createElement('option');
@@ -79,19 +79,20 @@ function displayWeatherData(data, city) {
         return;
     }
     
-    console.log("CIVIL Light API Data:", data); 
+    // console.log("CIVIL Light API Data:", data); 
 
-    
-    let forecastHTML = `<h2>7-Day Forecast for ${city.city}</h2><div class="weather-week">`;
 
     
     data.dataseries.forEach(stamp => {
         const maxTemp = stamp.temp2m.max;
         const minTemp = stamp.temp2m.min;
         const weatherDesc = stamp.weather;
-        const dateStr = stamp.date;
-       
+        const dateStr = String(stamp.date);
+
+        const formattedDate = getFormattedDate(dateStr);        
     });
+
+    
 
     function getFormattedDate(dateStr){
         const year = parseInt(dateStr.substring(0,4));
