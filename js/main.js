@@ -59,14 +59,15 @@ function searchWeather(){
     console.log("Found city lat:", foundCity.latitude);
     console.log("Found city long:", foundCity.longitude);
 
-    const weatherUrl = `http://www.7timer.info/bin/api.pl?lon=${foundCity.longitude}&lat=${foundCity.latitude}&product=astro&output=json`;
+    const weatherUrl = `http://www.7timer.info/bin/api.pl?lon=${foundCity.longitude}&lat=${foundCity.latitude}&product=civil&output=json`;
 
     fetch(weatherUrl)
         .then(response => response.json())
         .then(data => {
-            displayWeatherData(data);
+            displayWeatherData(data,foundCity);
         })
         .catch(error => {
             console.error("Error fetching weather data:", error);
         });
 }
+
