@@ -21,5 +21,18 @@ function loadCitiesData() {
 }
 
 window.onload = function(){
-    loadCitiesData();
+    loadCitiesData().then(() => {
+        populateCityList();
+    });
+}
+
+function populateCityList(){
+    const dataList = document.getElementById('cityList');
+    dataList.innerHTML = ''; // Clear previous options
+
+    cities.forEach(city=>{
+        const option = document.createElement('option');
+        option.value = `${city.city}, ${city.country}`;
+        dataList.appendChild(option);
+    })
 }
