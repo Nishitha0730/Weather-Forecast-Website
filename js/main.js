@@ -59,7 +59,7 @@ function searchWeather(){
     console.log("Found city lat:", foundCity.latitude);
     console.log("Found city long:", foundCity.longitude);
 
-    const weatherUrl = `http://www.7timer.info/bin/api.pl?lon=${foundCity.longitude}&lat=${foundCity.latitude}&product=civil&output=json`;
+    const weatherUrl = `http://www.7timer.info/bin/api.pl?lon=${foundCity.longitude}&lat=${foundCity.latitude}&product=civillight&output=json`;
 
     fetch(weatherUrl)
         .then(response => response.json())
@@ -71,3 +71,49 @@ function searchWeather(){
         });
 }
 
+function getWeatherDescription(weatherCode) {
+    // This is a simplified mapping for the CIVIL product.
+    // You may need to adjust based on the exact codes you see.
+    const weatherMap = {
+        'clear': 'Clear',
+        'pcloudy': 'Partly Cloudy',
+        'mcloudy': 'Mostly Cloudy',
+        'cloudy': 'Cloudy',
+        'humid': 'Humid',
+        'lightrain': 'Light Rain',
+        'oshower': 'Occasional Showers',
+        'ishower': 'Isolated Showers',
+        'rain': 'Rain',
+        'snow': 'Snow',
+        'rainsnow': 'Rain and Snow',
+        'ts': 'Thunderstorm',
+        'tsrain': 'Thunderstorm with Rain'
+    };
+ 
+    return weatherMap[weatherCode] || weatherCode;
+}
+
+
+function displayWeatherData(data, city) {
+    const result = document.getElementById('weatherResult');
+   
+    if (!data || !data.dataseries) {
+        result.innerHTML = '<div class="error">No weather data available for this location.</div>';
+        return;
+    }
+    
+    console.log("CIVIL Light API Data:", data); 
+
+    // Generate HTML for the 7-day forecast
+    let forecastHTML = `<h2>7-Day Forecast for ${city.city}</h2><div class="weather-week">`;
+
+    
+    data.dataseries.forEach(stamp => {
+        const maxTemp = stamp.temp2m.max;
+        const minTemp = stamp.temp2m.min;
+        const weatherDesc = stamp.weather;
+       
+    });
+
+
+}
