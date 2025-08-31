@@ -1,4 +1,319 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
 body {
-    background-color: #d7d7d7;
-    color: black;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
+    padding: 20px;
+    color: #333;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* Header styles */
+h1 {
+    text-align: center;
+    color: white;
+    font-size: 3rem;
+    font-weight: 700;
+    margin-bottom: 10px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+h2 {
+    text-align: center;
+    color: rgba(255, 255, 255, 0.9);
+    font-size: 1.2rem;
+    font-weight: 300;
+    margin-bottom: 40px;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+/* Search input styles */
+.search-container {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 40px;
+}
+
+#citySearch {
+    width: 100%;
+    max-width: 400px;
+    padding: 15px 20px;
+    border: none;
+    border-radius: 50px;
+    font-size: 16px;
+    background: rgba(255, 255, 255, 0.95);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    outline: none;
+    transition: all 0.3s ease;
+}
+
+#citySearch:focus {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
+    background: white;
+}
+
+#citySearch::placeholder {
+    color: #999;
+}
+
+/* Weather container styles */
+.weather-container {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border-radius: 20px;
+    padding: 30px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.weather-header {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.weather-header h2 {
+    color: white;
+    font-size: 1.8rem;
+    font-weight: 600;
+    margin: 0;
+}
+
+/* Weather cards horizontal layout */
+.weather-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 20px;
+    justify-items: center;
+}
+
+.weather-card {
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 16px;
+    padding: 20px;
+    text-align: center;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+    width: 100%;
+    max-width: 160px;
+    position: relative;
+    overflow: hidden;
+}
+
+.weather-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, #74b9ff, #0984e3);
+}
+
+.weather-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
+}
+
+/* Weather card content */
+.date {
+    font-weight: 600;
+    font-size: 14px;
+    color: #2d3436;
+    margin-bottom: 15px;
+    line-height: 1.2;
+}
+
+.weather-icon {
+    margin-bottom: 15px;
+}
+
+.weather-icon img {
+    width: 50px;
+    height: 50px;
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
+}
+
+.temps {
+    display: flex;
+    justify-content: center;
+    align-items: baseline;
+    gap: 8px;
+}
+
+.max-temp {
+    font-size: 24px;
+    font-weight: 700;
+    color: #2d3436;
+}
+
+.min-temp {
+    font-size: 16px;
+    color: #636e72;
+    font-weight: 500;
+}
+
+/* Error and loading states */
+.error {
+    color: #ff6b6b;
+    text-align: center;
+    padding: 20px;
+    font-weight: 600;
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 12px;
+    margin: 20px 0;
+}
+
+.loading {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 40px;
+    color: white;
+    font-size: 18px;
+}
+
+.loading::after {
+    content: '';
+    width: 20px;
+    height: 20px;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    border-top: 2px solid white;
+    border-radius: 50%;
+    margin-left: 10px;
+    animation: spin 1s linear infinite;
+}
+
+/* Footer */
+footer {
+    text-align: center;
+    margin-top: 50px;
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 14px;
+}
+
+/* Animations */
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.weather-card {
+    animation: fadeInUp 0.6s ease forwards;
+    opacity: 0;
+    transform: translateY(20px);
+}
+
+.weather-card:nth-child(1) { animation-delay: 0.1s; }
+.weather-card:nth-child(2) { animation-delay: 0.2s; }
+.weather-card:nth-child(3) { animation-delay: 0.3s; }
+.weather-card:nth-child(4) { animation-delay: 0.4s; }
+.weather-card:nth-child(5) { animation-delay: 0.5s; }
+.weather-card:nth-child(6) { animation-delay: 0.6s; }
+.weather-card:nth-child(7) { animation-delay: 0.7s; }
+
+@keyframes fadeInUp {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Tablet styles */
+@media (max-width: 768px) {
+    .container {
+        padding: 10px;
+    }
+
+    h1 {
+        font-size: 2.5rem;
+    }
+
+    .weather-container {
+        padding: 20px;
+    }
+
+    .weather-cards {
+        grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+        gap: 15px;
+    }
+
+    .weather-card {
+        padding: 15px;
+        max-width: 140px;
+    }
+
+    .date {
+        font-size: 12px;
+    }
+
+    .weather-icon img {
+        width: 40px;
+        height: 40px;
+    }
+
+    .max-temp {
+        font-size: 20px;
+    }
+
+    .min-temp {
+        font-size: 14px;
+    }
+}
+
+/* Mobile styles */
+@media (max-width: 480px) {
+    h1 {
+        font-size: 2rem;
+    }
+
+    h2 {
+        font-size: 1rem;
+    }
+
+    #citySearch {
+        padding: 12px 18px;
+        font-size: 14px;
+    }
+
+    .weather-cards {
+        grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+        gap: 12px;
+    }
+
+    .weather-card {
+        padding: 12px;
+        max-width: 120px;
+    }
+
+    .date {
+        font-size: 11px;
+        margin-bottom: 10px;
+    }
+
+    .weather-icon {
+        margin-bottom: 10px;
+    }
+
+    .weather-icon img {
+        width: 35px;
+        height: 35px;
+    }
+
+    .max-temp {
+        font-size: 18px;
+    }
+
+    .min-temp {
+        font-size: 13px;
+    }
 }
