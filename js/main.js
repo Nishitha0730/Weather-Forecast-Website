@@ -71,29 +71,6 @@ function searchWeather(){
         });
 }
 
-function getWeatherDescription(weatherCode) {
-    // This is a simplified mapping for the CIVIL product.
-    // You may need to adjust based on the exact codes you see.
-    const weatherMap = {
-        'clear': 'Clear',
-        'pcloudy': 'Partly Cloudy',
-        'mcloudy': 'Mostly Cloudy',
-        'cloudy': 'Cloudy',
-        'humid': 'Humid',
-        'lightrain': 'Light Rain',
-        'oshower': 'Occasional Showers',
-        'ishower': 'Isolated Showers',
-        'rain': 'Rain',
-        'snow': 'Snow',
-        'rainsnow': 'Rain and Snow',
-        'ts': 'Thunderstorm',
-        'tsrain': 'Thunderstorm with Rain'
-    };
- 
-    return weatherMap[weatherCode] || weatherCode;
-}
-
-
 function displayWeatherData(data, city) {
     const result = document.getElementById('weatherResult');
    
@@ -104,7 +81,7 @@ function displayWeatherData(data, city) {
     
     console.log("CIVIL Light API Data:", data); 
 
-    // Generate HTML for the 7-day forecast
+    
     let forecastHTML = `<h2>7-Day Forecast for ${city.city}</h2><div class="weather-week">`;
 
     
@@ -112,8 +89,23 @@ function displayWeatherData(data, city) {
         const maxTemp = stamp.temp2m.max;
         const minTemp = stamp.temp2m.min;
         const weatherDesc = stamp.weather;
+        const dateStr = stamp.date;
        
     });
 
+    function getFormattedDate(dateStr){
+        const year = parseInt(dateStr.substring(0,4));
+        const month = parseInt(dateStr.substring(4,6))-1;
+        const day = parseInt(dateStr.substring(6,8));
+       
+        const date = new Date(year,month,day);
+
+        const formattedDate = date.toLocaleDateString('en-US', {
+            day: 'numeric',
+            month: 'long',
+            year: 'numeric'
+        });
+        return formattedDate;
+    }
 
 }
