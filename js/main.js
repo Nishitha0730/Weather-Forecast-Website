@@ -61,4 +61,12 @@ function searchWeather(){
 
     const weatherUrl = `http://www.7timer.info/bin/api.pl?lon=${foundCity.longitude}&lat=${foundCity.latitude}&product=astro&output=json`;
 
+    fetch(weatherUrl)
+        .then(response => response.json())
+        .then(data => {
+            displayWeatherData(data);
+        })
+        .catch(error => {
+            console.error("Error fetching weather data:", error);
+        });
 }
